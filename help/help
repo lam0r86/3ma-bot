@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo "utfe v0.1 -- Universal tool for everything -- Currently in Beta-Test"
+echo "------"
+
+if [ -z "$1" ] ; then
+    echo "Active commands:"
+    cd ..
+    for a in */run ; do 
+	echo -n "${a%/run} "
+    done
+    echo
+    exit 0
+fi
+if [ ! -d "../$1" ] ; then
+    echo "Unknown command $1"
+    exit 0
+fi
+
+if [ ! -f "../$1/help" ] ; then
+    echo "No help  available for $1"
+    exit 0
+fi
+
+cat "../$1/help"
