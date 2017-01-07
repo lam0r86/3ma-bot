@@ -1,0 +1,19 @@
+#!/usr/bin/env perl
+
+my @args=@ARGV;
+
+use FindBin qw($Bin);
+chdir ($Bin);
+
+
+my $cmd=lc(shift(@args));
+
+if ( -x "$cmd/run" ) {
+	chdir ($cmd);
+	open(IN,"|-","./run",@args)||die "Can't exec $cmd: $!";
+	while(<IN>){
+		print $_;
+	};
+}else{
+	print "Unknown command $cmd. Maybe try HELP?\n";
+};
