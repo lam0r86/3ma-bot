@@ -1,0 +1,67 @@
+#!/usr/local/bin/perl -w -T -CSADL
+
+use strict;
+use DBI;
+
+my $dbh = DBI->connect(
+    "dbi:SQLite:dbname=kfz.sqlite3", "", "",
+    {
+	RaiseError     => 1,
+	sqlite_unicode => 1,
+	ReadOnly       => 1,
+    }
+);
+
+$\="\n";
+
+my $query="@ARGV";
+
+if ($query =~ /^.{1,3}$/) {
+    my $sql = 'SELECT ort FROM kfz WHERE kfz = ?';
+    my $sth = $dbh->prepare($sql);
+    my $plz=uc $query;
+
+    $sth->execute($plz);
+    my @orte;
+    while (my @row = $sth->fetchrow_array) {
+	push @orte,$row[0];
+    }
+    my $rows=$sth->rows;
+    if ($rows == 0){
+	print "$plz is not in my Database, sorry.";
+    } elsif ($rows==1){
+	print "$plz = $orte[0]";
+    }else{
+	print "$plz = ",join("\n\t",@orte)
+    };
+}else{
+    sub tryname {
+	return $dbh->selectcol_arrayref(
+	    "SELECT distinct(ort) FROM kfz WHERE ort like ?", 
+	    { },
+	    $_[0]
+	); 
+    };
+    my $ort=$query;
+    my $orte;
+    $orte=tryname($ort);
+    $orte=tryname($ort.'[, ]%')    if (scalar @$orte==0);
+    $orte=tryname($ort.'%')     if (scalar @$orte==0);
+    $orte=tryname('%'.$ort.'%') if (scalar @$orte==0);
+    if (scalar @$orte==0){
+	print "$ort is not in my Database, sorry.";
+    }elsif(scalar @$orte>12){
+	print "$ort matches ",(scalar @$orte)," Locations.";
+    }elsif(scalar @$orte>1){
+	print "$ort matches ",(scalar @$orte)," Locations:";
+	print join("\n",@$orte);
+    }else{
+	$ort=$orte->[0];
+	my $results= $dbh->selectcol_arrayref(
+	    "SELECT kfz FROM kfz WHERE ort = ?", 
+	    { },
+	    $ort
+	); 
+	print "$ort = ",join(",",sort {$a <=>$b} @$results);
+    };
+};
