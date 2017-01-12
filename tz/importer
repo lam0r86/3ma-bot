@@ -1,0 +1,80 @@
+#!/usr/local/bin/perl
+
+# Fetch from: http://download.geonames.org/export/dump/allCountries.zip
+
+use strict;
+
+my $dbfile=shift || "geo.db";
+
+unlink($dbfile) if -f $dbfile;
+
+$|=1;
+use DBI;
+my $dbh = DBI->connect("dbi:SQLite:${dbfile}","","", {
+		RaiseError => 1,
+		sqlite_unicode => 1,
+ });
+
+my @rows=qw(id name asciiname alternate lat lon class code cc cc2 admin1 admin2 admin3 admin4 pop elev dem tz moddate);
+
+$dbh->do("PRAGMA synchronous = OFF");
+
+$dbh->do("create table raw (".join(',',@rows).')')
+  or die $DBI::errstr;
+
+#open(F,"<","allCountries.txt") || die;
+open(F,"-|","unzip -p allCountries.zip") || die "Can't open input file: $!";
+
+my $sth = $dbh->prepare("INSERT INTO raw(".join(',',@rows).") VALUES (".
+										join(',',map {"?"} @rows).")");
+
+$dbh->begin_work;
+
+my @f;
+while (<F>){
+	chomp;
+	@f=split(/\t/,$_);
+
+	# Comment this line if you want a full import.
+	next unless $f[6] eq"A" || $f[6]eq "P";
+
+	die "\nline $. had $#f cols -- @f\n" if ($#f !=18);
+	$sth->execute( @f);
+	if($.%10000==0){print "$.\r"};
+};
+
+print "\nimport done, creating subtables and indices...\n";
+
+
+while(<DATA>){
+	next if /^\s*$/;
+	next if /^\s*#/;
+	last if /__END__/;
+	$dbh->do("$_") or die $DBI::errstr;
+};
+
+print "doing final vacuum...\n";
+
+$dbh->commit;
+
+$dbh->do("PRAGMA synchronous = ON");
+$dbh->do("VACUUM;");
+
+print "done!\n";
+
+
+__DATA__
+create table adm as select name,asciiname,alternate,code,cc,cc2,admin1,admin2,admin3,admin4,pop from raw where class="A";
+create table pop as select * from raw where class="P";
+
+#Comment the next line if you want to keep the full imported data
+drop table raw;
+
+create index nameidx on pop (name);
+create index adminidx on adm (admin1);
+
+__END__
+
+select c.name,c.lat,c.lon,c.cc,c.admin1,c.pop,c.tz,a.name from pop c join adm a on a.code="ADM1" and c.cc=a.cc and c.admin1 = a.admin1 where c.name="München";
+
+select c.name,a.name,tz from pop c join adm a on a.code="ADM1" and c.cc=a.cc and c.admin1 = a.admin1 where c.name="München" order by c.pop desc limit 1;
