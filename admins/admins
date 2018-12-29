@@ -1,0 +1,38 @@
+#!/usr/bin/perl
+
+#Text Formatting#
+my $errors='*Error:*';
+my $privileges='*Privileges:*';
+my $list='*Admins List below:*';
+#################
+
+my @args=@ARGV;
+use FindBin qw($Bin);
+chdir ($Bin);
+
+my $cmd=lc(shift(@args));
+
+if ($cmd =~ "list"){
+my $filename = glob('~/3ma-bot/admins.txt');
+open(my $fh, $filename)
+  or die "$errors Could not open file '$filename' $!";
+
+  print "$list\n";
+	while (my $row = <$fh>) {
+  	chomp $row;
+ 	 print "$row\n";
+}
+}
+elsif ($cmd =~ "add") {
+ my $filename = glob('~/3ma-bot/admins.txt');
+ my $ID = @ARGV[1];
+ my $name = @ARGV[2];
+ open(my $fh, '>>', $filename)
+  or die "$errors: Could not open file '$filename' $!";
+	if (not defined $name) {
+  print "$errors Need name for ID\n";
+}
+	print $fh "$ID $name\n";
+close $fh;
+		print "$privileges |$ID $name| added to Adminfile";
+}
