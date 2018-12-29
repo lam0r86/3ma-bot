@@ -1,8 +1,8 @@
 # Threema-Chat-Bot
 
-## This is an Fork of [Sec42/3ma-bot](https://github.com/Sec42/3ma-bot)
+#### This is an Fork of [Sec42/3ma-bot](https://github.com/Sec42/3ma-bot)
 
-## Universal Tool For Everything -- a small bot
+### Universal Tool For Everything -- a small bot
 
 This bot is written mostly in perl.  Most of the features require some
 external data to be downloaded and parsed into the correct format.
