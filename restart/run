@@ -1,0 +1,4 @@
+#!/bin/sh
+cd ~/3ma-bot
+echo "<<restarting bot>>" && "pkill simple-bot" && "/usr/bin/go run
+simple-bot.go &" && "sleep 7"

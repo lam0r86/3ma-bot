@@ -1,0 +1,12 @@
+######################
+#### YAMAHA Control ##
+######################
+## POWER ##
+{main-on|main-off}
+## VOLUME ##
+{main-vol-mute|main-vol-up|main-vol-down}
+## SCENES ##
+{main-scene-net|main-scene-bd|main-scene-tv}
+#######################
+## Same With Zones instead of Main ##
+#######################

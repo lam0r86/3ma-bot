@@ -1,0 +1,6 @@
+#!/usr/bin/env perl
+
+#Execute Commandline
+my @args=@ARGV;
+
+exec @args;
