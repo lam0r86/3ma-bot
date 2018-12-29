@@ -1,4 +1,6 @@
-# utfe
+# Threema-Chat-Bot
+
+## This is an Fork of [Sec42/3ma-bot](https://github.com/Sec42/3ma-bot)
 
 ## Universal Tool For Everything -- a small bot
 
@@ -9,10 +11,6 @@ sources.
 
 ### Usage
 
-utfe.bot is intended to be run by some bot framework like
-[3ma-bot](https://github.com/Sec42/3ma-bot).
-
-Each feature is currently implemented as a standalone binary in a subdirectory.
 
 ### Licence
 
@@ -20,8 +18,7 @@ All code in this repo is herby licenced under the 2-clause BSD licence.
 
 ### Legacy
 
-Most of the features are ports of features of the `Counter` - an old IRC bot.
 
 ### Thanks
 
-Thanks to all members of #blafasel who suggested and tested features.
+Thanks Sec42
