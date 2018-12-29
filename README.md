@@ -8,13 +8,14 @@ $GOPATH
 ~~~ 
 similar to this if you use Z-Shell, otherwise dot it in ~/.bashrc:
 ~~~Shell
-export GOPATH=~/.go >> ~/.zshrc
+"export GOPATH=~/.go" >> ~/.zshrc
+export GOPATH=~/.go"
 mkdir $GOPATH
 go get github.com/o3ma/o3rest
 go get github.com/o3ma/o3
 ~~~
 
-### Universal Tool For Everything -- a small bot
+### Universal Tool For Everything -- Threema Chat Bot
 
 This bot is written mostly in perl.  Most of the features require some
 external data to be downloaded and parsed into the correct format.
