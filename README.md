@@ -2,7 +2,11 @@
 
 #### This is an Fork of [Sec42/3ma-bot](https://github.com/Sec42/3ma-bot)
 
-It is written in go. If this is your first time working with go, you need to setup ~~~Shell $GOPATH ~~~ similar to this:
+It is written in go. If this is your first time working with go, you need to setup 
+~~~Shell 
+$GOPATH 
+~~~ 
+similar to this:
 ~~~Shell
 export GOPATH=~/.go
 mkdir $GOPATH
