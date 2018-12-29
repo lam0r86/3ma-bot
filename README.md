@@ -6,9 +6,9 @@ It is written in go. If this is your first time working with go, you need to set
 ~~~Shell 
 $GOPATH 
 ~~~ 
-similar to this:
+similar to this if you use Z-Shell, otherwise dot it in ~/.bashrc:
 ~~~Shell
-export GOPATH=~/.go
+export GOPATH=~/.go >> ~/.zshrc
 mkdir $GOPATH
 go get github.com/o3ma/o3rest
 go get github.com/o3ma/o3
