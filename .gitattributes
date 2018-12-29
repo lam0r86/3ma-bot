@@ -1,0 +1,2 @@
+* linguist-vendored
+*.sh linguist-language=Go

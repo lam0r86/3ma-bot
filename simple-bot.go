@@ -133,7 +133,8 @@ checkpriv := readFile()
 					os.Exit(1)
 				}
 			}else{
-					// Check For Admins rights
+
+// Check For Admins rights
 			for _,cpriv := range checkpriv {
 				 if (strings.Contains(string(cpriv), msg.Sender().String())){
 				tm, err := o3.NewTextMessage(&sc, msg.Sender().String(), string(cmdOut[:]))
