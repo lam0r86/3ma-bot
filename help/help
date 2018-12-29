@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "utfe v0.1 -- Universal tool for everything -- Currently in Beta-Test"
+echo "-- Universal tool for everything --"
 echo "------"
 
 if [ -z "$1" ] ; then
