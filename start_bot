@@ -1,0 +1,14 @@
+#!/bin/bash
+botdir="$HOME/threema-chat-bot"
+lockfile="$botdir/start_bot.lock"
+cd $botdir
+
+APP_ID=$(ps -C start_bot --no-header --format 'pid')
+
+if [ -n "${APP_ID}" ]; then
+    echo "Already running $APP_ID"
+else
+    echo "$0 starting..."
+	/usr/bin/go run simple-bot.go \
+					privileges.go
+fi
