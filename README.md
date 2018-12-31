@@ -15,6 +15,23 @@ go get github.com/o3ma/o3rest
 go get github.com/o3ma/o3
 ~~~
 
+Add ID to admins.txt like:
+~~~Shell
+HR2R2S1G #Testuser
+~~~
+
+Compile your Bot with:
+~~~Shell
+cd $HOME/threema-chat-bot
+go build simple-bot.go privileges.go
+~~~
+
+Execute 
+~~~Shell
+./start_bot 
+~~~
+And Enjoy your Bot
+
 ### Universal Tool For Everything -- Threema Chat Bot
 
 This bot is written mostly in perl.  Most of the features require some
