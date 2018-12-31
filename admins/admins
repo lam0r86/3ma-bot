@@ -13,7 +13,7 @@ chdir ($Bin);
 my $cmd=lc(shift(@args));
 
 if ($cmd =~ "list"){
-my $filename = glob('~/3ma-bot/admins.txt');
+my $filename = glob('~/threema-chat-bot/admins.txt');
 open(my $fh, $filename)
   or die "$errors Could not open file '$filename' $!";
 
@@ -24,15 +24,19 @@ open(my $fh, $filename)
 }
 }
 elsif ($cmd =~ "add") {
- my $filename = glob('~/3ma-bot/admins.txt');
+ my $filename = glob('~/threema-chat-bot/admins.txt');
  my $ID = @ARGV[1];
  my $name = @ARGV[2];
+ my $lid = length($ID);
+ if (length($ID) > "8") {
+				 print "$errors ID must be 8 Characters long yours are $lid ";
+		 }else{
  open(my $fh, '>>', $filename)
-  or die "$errors: Could not open file '$filename' $!";
+  or die "$errors Could not open file '$filename' $!";
 	if (not defined $name) {
   print "$errors Need name for ID\n";
 }
 	print $fh "$ID $name\n";
 close $fh;
 		print "$privileges |$ID $name| added to Adminfile";
-}
+}}

@@ -42,4 +42,6 @@ All code in this repo is herby licenced under the 2-clause BSD licence.
 
 ### Thanks
 
-Thanks [Sec42](https://github.com/Sec42)
+Thanks to:
+[Sec42](https://github.com/Sec42)
+[darth-veitcher](https://gist.github.com/darth-veitcher)

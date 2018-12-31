@@ -1,14 +1,35 @@
 #!/bin/bash
-botdir="$HOME/threema-chat-bot"
-lockfile="$botdir/start_bot.lock"
-cd $botdir
+SCRIPTNAME=`basename $0`
+SCRIPTDIR="$HOME/threema-chat-bot"
+PIDFILE=$SCRIPTDIR/$SCRIPTNAME.pid
 
-APP_ID=$(ps -C start_bot --no-header --format 'pid')
 
-if [ -n "${APP_ID}" ]; then
-    echo "Already running $APP_ID"
+if [ -f $PIDFILE ]
+then
+  PID=$(cat $PIDFILE)
+  ps -p $PID > /dev/null 2>&1
+  if [ $? -eq 0 ]
+  then
+    echo "Process already running"
+    exit 1
+  else
+    ## Process not found assume not running
+    echo $$ > $PIDFILE
+    if [ $? -ne 0 ]
+    then
+      echo "Could not create PID file"
+      exit 1
+    fi
+  fi
 else
-    echo "$0 starting..."
-	/usr/bin/go run simple-bot.go \
-					privileges.go
+  echo $$ > $PIDFILE
+  if [ $? -ne 0 ]
+  then
+    echo "Could not create PID file"
+    exit 1
+  fi
 fi
+    echo "$0 starting..."
+	./simple-bot
+rm $PIDFILE
+pkill simple-bot
