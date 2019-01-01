@@ -1,7 +1,6 @@
 #!/bin/sh
 
-echo "-- Universal tool for everything --"
-echo "------"
+echo "*-- Universal tool for everything --*"
 
 if [ -z "$1" ] ; then
     echo "Active commands:"

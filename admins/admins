@@ -22,14 +22,13 @@ open(my $fh, $filename)
   	chomp $row;
  	 print "$row\n";
 }
-}
-elsif ($cmd =~ "add") {
+}elsif ($cmd =~ "add") {
  my $filename = glob('~/threema-chat-bot/admins.txt');
  my $ID = @ARGV[1];
  my $name = @ARGV[2];
  my $lid = length($ID);
- if (length($ID) > "8") {
-				 print "$errors ID must be 8 Characters long yours are $lid ";
+ if (length($ID) != "8") {
+				 print "$errors ID must be *8* Characters long yours are *$lid* ";
 		 }else{
  open(my $fh, '>>', $filename)
   or die "$errors Could not open file '$filename' $!";
@@ -39,4 +38,37 @@ elsif ($cmd =~ "add") {
 	print $fh "$ID $name\n";
 close $fh;
 		print "$privileges |$ID $name| added to Adminfile";
-}}
+}
+}elsif ($cmd =~ "del") {
+ my $filename = glob('~/threema-chat-bot/admins.txt');
+ my $ID = @ARGV[1];
+ my $lid = length($ID);
+ if (length($ID) != "8"){
+				 print "$errors ID must be *8* Characters long yours are *$lid* ";
+		 }else{
+	if (not defined $ID) {
+  print "$errors Need ID\n";
+}
+
+#Define Delete Command with Owner!
+ if ($ID == "H4B4W2RY"){
+	 print "$errors You can´t delete Owner";
+ }else{
+open(FILE, $filename) || die "File not found";
+my @lines = <FILE>;
+close(FILE);
+
+my @newlines;
+foreach(@lines) {
+   $_ =~ s/$ID.+//g;
+   $_ =~ s/^\s*$//mg;
+   push(@newlines,$_);
+}
+
+open(FILE, ">$filename") || die "File not found";
+print FILE @newlines;
+close(FILE);
+		print "$privileges |$ID| deleted from Adminfile";
+}
+}
+}
