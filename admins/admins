@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#Text Formatting#
+#text Formatting#
 my $errors='*Error:*';
 my $privileges='*Privileges:*';
 my $list='*Admins List below:*';

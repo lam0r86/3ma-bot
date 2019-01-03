@@ -1,4 +1,8 @@
 #!/bin/sh
+#Text Formatting#
+errors='*Error:*'
+privileges='*Privileges:*'
+#################
 
 echo "*-- Universal tool for everything --*"
 
@@ -6,18 +10,18 @@ if [ -z "$1" ] ; then
     echo "Active commands:"
     cd ..
     for a in */run ; do 
-	echo -n "${a%/run} "
+	echo -n "${a%/run}\n "
     done
     echo
     exit 0
 fi
 if [ ! -d "../$1" ] ; then
-    echo "Unknown command $1"
+    echo "$errors Unknown command $1"
     exit 0
 fi
 
 if [ ! -f "../$1/help" ] ; then
-    echo "No help  available for $1"
+    echo "$errors No help  available for $1"
     exit 0
 fi
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env perl
+#Text Formatting#
+my $errors='*Error:*';
+my $privileges='*Privileges:*';
+#################
 
 my @args=@ARGV;
 
@@ -10,10 +14,10 @@ my $cmd=lc(shift(@args));
 
 if ( -x "$cmd/run" ) {
 	chdir ($cmd);
-	open(IN,"|-","./run",@args)||die "Can't exec $cmd: $!";
+	open(IN,"|-","./run",@args)||die "$errors Can't exec $cmd: $!";
 	while(<IN>){
 		print $_;
 	};
 }else{
-	print "Unknown command $cmd. Maybe try HELP?\n";
+	print "$errors Unknown command $cmd. Maybe try HELP?\n";
 };

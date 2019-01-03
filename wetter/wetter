@@ -1,0 +1,7 @@
+#!/bin/sh
+wget --quiet  -O - "http://wttr.in/$1?lang=de" | head -7 \
+		| sed 's/\x1b\[[0-9;]*m//g' | cut -b 14-100 \
+		| sed 's/für/Wetter für/' > /tmp/wetter
+
+echo -n  && cat /tmp/wetter
+rm /tmp/wetter

@@ -45,6 +45,7 @@ then
 # Define Variable tecreset
 tecreset=$(tput sgr0)
 
+echo -e "*TCB: _Status Script_*"
 # Check if connected to Internet or not
 ping -c 1 google.com &> /dev/null && echo -e "Internet:  Connected" ||
 		echo -e "Internet: Disconnected"
@@ -127,23 +128,23 @@ nameservers=$(cat /etc/resolv.conf | sed '1 d' | awk '{print $2}')
 echo -e "Name Servers :"  $nameservers 
 
 # Check Logged In Users
-who>/tmp/who
+who | column -t >/tmp/who
 echo -e "Logged In users :"  && cat /tmp/who 
 
 # Check RAM and SWAP Usages
-free -h | grep -v + > /tmp/ramcache
+free -h | grep -v + | column -t > /tmp/ramcache
 echo -e "Ram Usages :" 
 cat /tmp/ramcache | grep -v "Swap"
 echo -e "Swap Usages :" 
 cat /tmp/ramcache | grep -v "Mem"
 
 # Check Disk Usages
-df -h| grep 'Filesystem\|/dev/sda*' > /tmp/diskusage
+df -h| grep 'Filesystem\|/dev/mmcblk0*' | column -t > /tmp/diskusage
 echo -e "Disk Usages :"  
 cat /tmp/diskusage
 
 # Check Load Average
-loadaverage=$(top -n 1 -b | grep "load average:" | awk '{print $10 $11 $12}')
+loadaverage=$(top -n 1 -b | grep "load average :" | awk '{print $10 $11 $12}')
 echo -e "Load Average :"  $loadaverage
 
 # Check System Uptime

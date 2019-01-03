@@ -29,6 +29,7 @@ else
     exit 1
   fi
 fi
+	pkill simple-bot
     echo "$0 starting..."
 	./simple-bot
 rm $PIDFILE

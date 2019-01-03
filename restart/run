@@ -1,3 +1,3 @@
 #!/bin/sh
 cd ~/threema-chat-bot
-echo "*|<restarting bot>|*" && "cat start_bot.pid | xargs kill" && "sleep 2" && "./start_bot &" && "sleep 7"
+echo "*|<restarting bot>|*" && "cat start_bot.pid | xargs kill" && "pkill simple-bot" && "sleep 2" && "./start_bot &" && "sleep 7"
