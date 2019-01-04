@@ -1,0 +1,5 @@
+*VPN Commands*
+ "  List #List all Vertificates
+ "  Clients #List all connected clients
+ "  Add #Add New Client 
+ "  Revoke #Delete Client
