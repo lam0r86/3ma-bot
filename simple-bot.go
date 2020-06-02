@@ -35,12 +35,40 @@ func cleanup() {
 	}
 }
 
+func askForLicenseKey() string {
+  fmt.Println("Please enter a licence key (format 1A2B3-C4E5F): ")
+  var response string
+	_, err := fmt.Scanln(&response)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(response) == 11  {
+		return response
+	} else {
+		return askForLicenseKey()
+	}
+}
+
+func askForDeviceUUID() string {
+  fmt.Println("Please enter a device-id (UUID format 12345678-1234-1234-1234-123456789012): ")
+  var response string
+	_, err := fmt.Scanln(&response)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(response) == 36  {
+		return response
+	} else {
+		return askForDeviceUUID()
+	}
+}
+
 func main(){
-
-
 	// Check if ID already exists
 	if  _,err := os.Stat(idpath); os.IsNotExist(err) {
-		threemaID,err = tr.CreateIdentity()
+        var uuid = askForDeviceUUID()
+        var lic = askForLicenseKey()
+		threemaID,err = tr.CreateIdentity(uuid, lic)
 		if (err != nil){
 			log.Fatalln(err)
 			os.Exit(1)
